@@ -28,16 +28,35 @@ app.use("/api/admin", adminRoutes);
 
 
 
+// async function main() {
+//   await mongoose.connect(process.env.DB_URL);
+//   app.use("/", (req, res) => {
+//     res.send('Book store server is running!');
+//   });
+
+// }
+// main().then(() => console.log("mongodb connect successfully")).catch(err => console.log(err));
+
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// });
+
+app.get("/", (req, res) => {
+  res.send('Book store server is running!');
+});
+
 async function main() {
-  await mongoose.connect(process.env.DB_URL);
-  app.use("/", (req, res) => {
-    res.send('Book store server is running!');
-  });
-
+  try {
+    await mongoose.connect(process.env.DB_URL);
+    console.log("MongoDB connected successfully");
+  } catch (err) {
+    console.error("Failed to connect to MongoDB:", err);
+  }
 }
-main().then(()=>console.log("mongodb connect successfully")).catch(err => console.log(err));
 
+main();
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 });
